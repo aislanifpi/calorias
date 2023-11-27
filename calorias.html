@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora de Consumo Calórico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="number"] {
+      width: 100px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Consumo Calórico - Exemplo</h1>
+
+  <label for="weight">Peso (em kg):</label>
+  <input type="number" id="weight" step="0.1">
+
+  <label for="height">Altura (em cm):</label>
+  <input type="number" id="height" step="1">
+
+  <label for="age">Idade (em anos):</label>
+  <input type="number" id="age" step="1">
+
+  <label for="gender">Sexo:</label>
+  <select id="gender">
+    <option value="male">Masculino</option>
+    <option value="female">Feminino</option>
+  </select>
+
+  <label for="activity-level">Nível de Atividade Física:</label>
+  <select id="activity-level">
+    <option value="sedentary">Sedentário</option>
+    <option value="lightly-active">Levemente Ativo</option>
+    <option value="moderately-active">Moderadamente Ativo</option>
+    <option value="very-active">Muito Ativo</option>
+    <option value="extremely-active">Extremamente Ativo</option>
+  </select>
+
+  <button onclick="calculateCalories()">Calcular</button>
+
+  <div id="result"></div>
+
+  <script>
+    function calculateCalories() {
+      var weight = parseFloat(document.getElementById('weight').value);
+      var height = parseFloat(document.getElementById('height').value);
+      var age = parseFloat(document.getElementById('age').value);
+      var gender = document.getElementById('gender').value;
+      var activityLevel = document.getElementById('activity-level').value;
+      var resultElement = document.getElementById('result');
+
+      var tmb;
+      if (gender === 'male') {
+        tmb = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+      } else {
+        tmb = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+      }
+
+      var activityFactor;
+      switch (activityLevel) {
+        case 'sedentary':
+          activityFactor = 1.2;
+          break;
+        case 'lightly-active':
+          activityFactor = 1.375;
+          break;
+        case 'moderately-active':
+          activityFactor = 1.55;
+          break;
+        case 'very-active':
+          activityFactor = 1.725;
+          break;
+        case 'extremely-active':
+          activityFactor = 1.9;
+          break;
+        default:
+          activityFactor = 1.2;
+          break;
+      }
+
+      var minimumCalories = tmb * activityFactor;
+
+      resultElement.textContent = 'Consumo Mínimo de Calorias: ' + minimumCalories.toFixed(2) + ' calorias por dia';
+    }
+  </script>
+</body>
+</html>
